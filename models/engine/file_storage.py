@@ -20,8 +20,22 @@ class FileStorage():
 
     def save(self):
         """serializes objects to the JSON file"""
+        dicobj = {}
+        for key, obj in FileStorage.__object.items():
+            dicobj[key] = obj.to_dict()
+            with open(FileStorage.__filePath, "w") as jsonF:
+                dump(dicobj, jsonF)
 
     def reload(self):
         """"deserializes the JSON file to object"""
+        try:
+            with open(FileStorage.__filePath, "r") as jsonStr:
+                deserialized_obj = load(jsonStr)
+                for key, value in deserialized_obj.items():
+                    FileStorage.__objects[key] = eval(
+                            value["__class__"])(**value)
+        except FileNotFoundError:
+            return
+
 
 
