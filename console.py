@@ -1,8 +1,18 @@
 #!/usr/bin/python3
 """ the console file """
 
+
 from models.base_model import BaseModel
 import cmd
+from models.engine.file_storage import FileStorage
+from models import storage
+from models.user import User
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.state import State
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -38,6 +48,28 @@ class HBNBCommand(cmd.Cmd):
             print('** instance id missing **')
             return
         instance_id = args[1]
+
+        def do_all(self, arg):
+            """Print string representations of instances
+            based on class name or all instances."""
+            if not arg:
+                instance_strings = self.get_all_instances()
+                if instance_strings:
+                    for instance_str in instance_strings:
+                        print(instance_str)
+                else:
+                    print("No instances found.")
+            else:
+                class_name = arg
+                if not check_class_exists(class_name):
+                    print('** class doesn\'t exist **')
+                else:
+                    instance_strings = self.get_instances_by_class(class_name)
+                    if instance_strings:
+                        for instance_str in instance_strings:
+                            print(instance_str)
+                    else:
+                         print("No instances of {} found.".format(class_name))
 
 
 
