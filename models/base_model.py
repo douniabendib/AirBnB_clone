@@ -1,11 +1,13 @@
 #!/usr/bin/python3
+"""define a basse mode"""
+
 from uuid import uuid4
 from datetime import datetime
 import models
-"""Define a Base class"""
 
 
-class BaseModel:
+
+class BaseModel():
     """ Base Class """
     def __init__(self, *args, **kwargs):
         """Intialization of class
@@ -39,7 +41,7 @@ class BaseModel:
 
     def to_dict(self):
         """Dictionary representation"""
-        dicformat = {}
+        dicformat = self.__dict__.copy()
 
         dicFormat["id"] = self.id
         dicFormat["__class__"] = self.__class__.__name__
